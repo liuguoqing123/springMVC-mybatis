@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5">
+
+<!--     <servlet>
+        <servlet-name>Spring MVC Dispatcher Servlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextClass</param-name>
+            <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+        </init-param>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>com.johnathanmsmith.mvc.web.config, com.johnathanmsmith.mvc.web.controller</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet> -->
+
+<!--     <servlet-mapping>
+        <servlet-name>Spring MVC Dispatcher Servlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping> -->
+    
+    <!-- SpringMVC  DispatcherServlet配置 -->  
+<servlet>  
+    <servlet-name>spring</servlet-name>  
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>  
+    <init-param>  
+        <param-name>contextConfigLocation</param-name>  
+        <param-value>classpath:spring/spring-*.xml</param-value>
+       <!--  <param-value>classpath:spring/spring-dao.xml</param-value>
+        <param-value>classpath:spring/spring-web.xml</param-value>   -->
+        
+    </init-param>  
+    <load-on-startup>1</load-on-startup>  
+</servlet> 
+<!-- springmvc 请求后缀 -->  
+<servlet-mapping>  
+    <servlet-name>spring</servlet-name>  
+    <url-pattern>/</url-pattern><!-- <url-pattern>*.do</url-pattern>拦截所有以.do结尾的请求，交于DispatcherServlet处理 -->  
+</servlet-mapping>
+    
+  <!--处理从页面传递中文到后台而出现的中文乱码问题 -->  
+  <!-- encoding start -->  
+  <filter>  
+    <filter-name>encodingFilter</filter-name>  
+    <filter-class>                      
+            org.springframework.web.filter.CharacterEncodingFilter    
+        </filter-class>  
+    <init-param>  
+      <param-name>encoding</param-name>  
+      <param-value>UTF-8</param-value>  
+    </init-param>  
+    <init-param>  
+      <param-name>forceEncoding</param-name>  
+      <param-value>true</param-value>  
+    </init-param>  
+  </filter>  
+  
+    <filter-mapping>  
+    <filter-name>encodingFilter</filter-name>  
+    <url-pattern>/*</url-pattern><!-- 对所有文件过滤 -->  
+  </filter-mapping> 
+  <!-- 首页设置 -->  
+	<welcome-file-list>  
+    <welcome-file>index.jsp</welcome-file>  
+	</welcome-file-list>
+</web-app>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjhr.dao.UserDao">
+
+	<resultMap type="com.bjhr.bean.User" id="resultRM">
+		<id property="userId" column="user_id" />
+		<result property="userName" column="user_name" />
+		<result property="userTel" column="user_tel" />
+		<result property="userSex" column="user_sex" />
+	</resultMap>
+
+	<select id="find" resultMap="resultRM">
+		select * from user
+		<where>
+			<if test="userName!=null and userName!='' ">
+				and user_name like #{userName}
+			</if>
+			<if test="userTel != null and userTel != '' ">
+				and user_tel like #{userTel}
+			</if>
+		</where>
+		<if test="start!=null and size!=null">
+			limit #{start},#{size}
+		</if>
+	</select>
+
+	<select id="getTotal" parameterType="Map" resultType="Long">
+		select count(*) from user
+		<where>
+			<if test="userName!=null and userName!='' ">
+				and user_name like #{userName}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectAll" resultMap="resultRM">
+		select * from usert
+	</select> 
+
+<!-- 	<select id="selectAll" resultMap="resultRM">
+		select * from usertest
+	</select> -->
+
+
+	<select id="selectById" resultMap="resultRM">
+		select * from user where
+		user_id =
+		#{userId}
+	</select>
+
+	<select id="select1" resultMap="resultRM">
+		select * from user
+		<where>
+			<if test="userName != null and userName != '' ">
+				and user_name = #{userName}
+			</if>
+			<if test="userTel != null and userTel != '' ">
+				and user_tel = #{userTel}
+			</if>
+		</where>
+	</select>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id">
+		insert
+		into user(user_name,user_tel,user_sex)
+		values(#{userName},#{userTel},#{userSex})
+	</insert>
+
+	<delete id="delete">
+		delete from user where user_id = #{userId}
+	</delete>
+
+	<update id="update">
+		update user set user_name = #{userName},user_tel =
+		#{userTel},user_sex = #{userSex} where user_id = #{userId}
+	</update>
+
+	<update id="update2">
+		update user
+		<set>
+			<if test="userName != null and userName != '' ">
+				user_name = #{userName},
+			</if>
+			<if test="userTel != null and userTel != '' ">
+				userTel = #{userTel},
+			</if>
+		</set>
+		where user_id = #{userId}
+	</update>
+	
+</mapper>
